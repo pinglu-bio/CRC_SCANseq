@@ -1,0 +1,24 @@
+import pandas as pd
+##### load config and sample sheets #####
+configfile: "config/config.yaml"
+
+sample_table = pd.read_csv(config["sample_table"])
+samples = [s for p in pd.concat([sample_table["normal"], sample_table["tumor"]]).str.split(";") for s in p]
+patients = [p for p in sample_table["patient"]]
+
+include: "rules/s01_data_preprocessing.smk"
+include: "rules/s02_somatic_snv.smk"
+include: "rules/s03_somatic_ann.smk"
+
+rule all:
+    input:
+        [
+            f"results/02_05_cal_contamination/{patient}/{sample}_contamination.table"
+            for patient in patients for sample in sample_table.loc[sample_table.patient == patient,"tumor"].str.split(";").iloc[0]
+        ],
+        expand("results/03_02_snpSift/{patient}/{patient}_mutect2_filtered_snpSift.vcf", patient = patients),
+        expand("results/03_04_annovar/{patient}/{patient}.hg38_multianno.vcf", patient = patients),
+        [
+            f"results/03_04_annovar/{patient}/{sample}/{sample}.maf"
+            for patient in patients for sample in sample_table.loc[sample_table.patient == patient,"tumor"].str.split(";").iloc[0]
+        ],

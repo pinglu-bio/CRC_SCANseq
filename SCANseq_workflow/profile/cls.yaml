@@ -1,0 +1,19 @@
+__default__:
+  jobname: "lp_{rule}"
+  output: ".slurm/{rule}.out"
+  error: ".slurm/{rule}.err"
+  account: tangfuchou_g1
+#  partition: cn-long
+#  qos: tangfuchoucnl
+#  partition: cn_icg
+#  qos: tangfuchoucnicg
+  partition: fat4way
+  qos: tangfuchouf4w
+  n_node: 1
+  n_task: 1
+  n_cpu: "{threads}"
+
+s06_build_new_ref_02_stringtie_assembling:
+  partition: fat8way
+  qos: tangfuchouf8w
+

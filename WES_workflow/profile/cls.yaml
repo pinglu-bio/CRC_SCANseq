@@ -1,0 +1,24 @@
+__default__:
+  jobname: "lp_{rule}"
+  output: ".slurm/{rule}.out"
+  error: ".slurm/{rule}.err"
+  account: tangfuchou_g1
+  partition: cn-long
+  qos: tangfuchoucnl
+#  partition: cn_icg
+#  qos: tangfuchoucnicg
+#  partition: fat4way
+#  qos: tangfuchouf4w
+  n_node: 1
+  n_task: 1
+  n_cpu: "{threads}"
+
+s01_02_mapping:
+  partition: fat4way
+  qos: tangfuchouf4w
+
+s01_03_duprm:
+  partition: fat4way
+  qos: tangfuchouf4w
+  
+

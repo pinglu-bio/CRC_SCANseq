@@ -1,0 +1,164 @@
+import pandas as pd
+import yaml
+
+##### load config and sample sheets #####
+configfile: "config/config.yaml"
+
+with open(config["libraries"], "r") as f:
+    libraries = yaml.load(f, Loader=yaml.Loader)
+
+barcodes = pd.read_csv(config["barcodes"])["barcode"]
+
+with open(config["samples"], "r") as f:
+    samples = yaml.load(f, Loader=yaml.Loader)
+
+dir_smk = config["dir_smk"]
+
+#include: "rules/s01_data_preprocessing.smk"
+#include: "rules/s02_align.smk"
+#include: "rules/s03_summary_stat.smk"
+#include: "rules/SNV_bam2matrix_pileup.smk"
+include: "rules/s04_rmsk_quant.smk"
+
+rule all:
+    input:
+        #expand("results/scTE/{sample}/scte_{sample}.csv", sample = samples),
+        #expand("results/scTE/{sample}/DONE", sample = samples),
+#expand("results/rmsk_stringtie/{sample}/gene_abund.tab", sample = samples),
+#        expand("results/rmsk_stringtie/{sample}/rmsk_stringtie.gtf.gz", sample = samples),
+#        expand("results/rmsk_stringtie/{sample}/DONE", sample = samples),
+        expand("results/rmsk_stringtie/{sample}/cov.txt", sample = samples),
+        expand("results/rmsk_stringtie/{sample}/DONE_02", sample = samples),
+
+###s00_raw_data
+#        expand("results/00_raw_data/{library}/{library}.fastq.gz", library = libraries),
+###s01_demultiplexing
+#        expand("results/01_demultiplexing/{library}/{barcode}.fastq", library = libraries, barcode = barcodes),
+#        expand("results/01_demultiplexing/{library}/DONE", library = libraries),
+###s02_qc
+#        expand("results/02_qc/{library}_{barcode}/{library}_{barcode}.fastq", library = libraries, barcode = barcodes),
+#        expand("results/02_qc/{library}_{barcode}/{library}_{barcode}_stat.txt", library = libraries, barcode = barcodes),
+#        expand("results/02_qc/{library}_{barcode}/DONE", library = libraries, barcode = barcodes),
+###s03_full_length
+#        expand("results/03_full_length/{library}_{barcode}/{library}_{barcode}_full_length.fa", library = libraries, barcode = barcodes),
+#        expand("results/03_full_length/{library}_{barcode}/{library}_{barcode}_full_length_len.txt", library = libraries, barcode = barcodes),
+#        expand("results/03_full_length/{library}_{barcode}/pychopper_report.tsv", library = libraries, barcode = barcodes),
+#        expand("results/03_full_length/{library}_{barcode}/pychopper_report.pdf", library = libraries, barcode = barcodes),
+#        expand("results/03_full_length/{library}_{barcode}/DONE", library = libraries, barcode = barcodes),
+###s04_genome_mapping
+#        expand("results/04_genome_mapping/{library}_{barcode}/{library}_{barcode}_sorted.bam", library = libraries, barcode = barcodes),
+#        expand("results/04_genome_mapping/{library}_{barcode}/{library}_{barcode}_sorted.bam.bai", library = libraries, barcode = barcodes),
+#        expand("results/04_genome_mapping/{library}_{barcode}/DONE_01_genome_mapping", library = libraries, barcode = barcodes),
+###s05_quant_known_ref
+#        expand("results/05_quant_known_ref/{sample}/gene_abund.tab",sample = samples),
+#        expand("results/05_quant_known_ref/{sample}/quant_known_ref_stringtie.gtf",sample = samples),
+#        expand("results/05_quant_known_ref/{sample}/DONE", sample = samples),
+#        "results/05_quant_known_ref_merge/tran_counts.txt",
+#        "results/05_quant_known_ref_merge/quant_known_ref_stringtie_tpm.csv"
+#        "results/06_build_new_ref/01_merged.bam",
+#        "results/06_build_new_ref/DONE_01_merge_bam",
+#        "results/06_build_new_ref/02_stringtie_assembling.gtf",
+#        "results/06_build_new_ref/DONE_02_stringtie_assembling",
+#        "results/06_build_new_ref/02_stringtie_assembling_cov3.gtf",
+#        "results/06_build_new_ref/03_sqanti3qc.gff3",
+#        "results/06_build_new_ref/03_sqanti3qc_corrected.fasta",
+#        "results/06_build_new_ref/03_sqanti3qc_corrected.gtf",
+#        "results/06_build_new_ref/03_sqanti3qc_corrected.faa",
+#        "results/06_build_new_ref/03_sqanti3qc_classification.txt",
+#        "results/06_build_new_ref/03_sqanti3filter.filtered.gtf",
+#        "results/06_build_new_ref/DONE_03_sqanti3",
+###s07_quant_new_ref
+#        expand("results/07_quant_new_ref/{sample}/gene_abund.tab",sample = samples),
+#        expand("results/07_quant_new_ref/{sample}/quant_new_ref_stringtie.gtf",sample = samples),
+#        expand("results/07_quant_new_ref/{sample}/DONE", sample = samples),
+#        "results/07_quant_new_ref_merge/tran_counts.txt",
+#        expand("results/08_quant_corrected_new_ref/{sample}/gene_abund.tab",sample = samples),
+#        expand("results/08_quant_corrected_new_ref/{sample}/quant_corrected_new_ref_stringtie.gtf",sample = samples),
+#        expand("results/08_quant_corrected_new_ref/{sample}/DONE", sample = samples),
+#        "results/08_quant_corrected_new_ref_merge/tran_counts.txt",
+#        expand("results/summary_stat/{library}_{barcode}/DONE", library=libraries, barcode=barcodes),
+#        "results/summary_stat_merge/summary_stat_merge.csv",
+#        expand("results/SNV_bam2matrix_pileup/{sample}/{sample}_snv.tsv.gz", sample = samples),
+#        "results/SNV_bam2matrix_pileup_merge/RNA_SNV_merged_1-based.csv"
+## s06_fusion_01_fusion_finder
+#        expand("results/06_fusion/{library}_{barcode}/fusion.rep.fa",library = libraries, barcode = barcodes),
+#        expand("results/06_fusion/{library}_{barcode}/fusion.position.txt",library = libraries, barcode = barcodes),
+#        expand("results/06_fusion/{library}_{barcode}/fusion.gff",library = libraries, barcode = barcodes),
+#        expand("results/06_fusion/{library}_{barcode}/DONE_01_fusion_finder", library = libraries, barcode = barcodes),
+# s06_fusion_02_stat
+#        expand("results/06_fusion/{library}_{barcode}/figure", library = libraries, barcode = barcodes),
+#        expand("results/06_fusion/{library}_{barcode}/DONE_02_stat", library = libraries, barcode = barcodes),
+#s07_stringtie
+#        expand("results/07_stringtie/{sample}/{sample}_stringtie.gff", sample = samples),
+#        expand("results/07_stringtie/{sample}/{sample}_fl_count.txt",sample = samples),
+#        expand("results/07_stringtie/{sample}/DONE_01_stringtie", sample = samples),
+#        expand("results/07_stringtie/{sample}/stringtie_classification.txt", sample = samples),
+#       expand("results/07_stringtie/{sample}/stringtie_corrected.fasta", sample = samples),
+#        expand("results/07_stringtie/{sample}/stringtie_corrected.gtf", sample = samples),
+#        expand("results/07_stringtie/{sample}/DONE_02_sqanti3_qc", sample = samples),
+#        expand("results/07_stringtie/{sample}/stringtie_classification.filtered_lite.gtf", sample = samples),
+#        expand("results/07_stringtie/{sample}/DONE_03_sqanti3_RulesFilter", sample = samples),
+#s07_stringtie_and_ORF
+#        expand("results/07_stringtie_and_ORF/{sample}/{sample}_stringtie.gff", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/{sample}_fl_count.txt",sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/DONE_01_stringtie", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/stringtie_classification.txt", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/stringtie_corrected.fasta", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/stringtie_corrected.gtf", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/stringtie.gff3", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/DONE_02_sqanti3_qc", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/stringtie_classification.filtered_lite.gtf", sample = samples),
+#        expand("results/07_stringtie_and_ORF/{sample}/DONE_03_sqanti3_RulesFilter", sample = samples),
+#s08_quantify_new_ref
+#expand("results/08_quantify_new_ref/{sample}/DONE_01_cdna_mapping", sample = samples),
+#        expand("results/08_quantify_new_ref/{sample}/DONE_02_saturation_curve",sample = samples),
+#        expand("results/08_quantify_new_ref_salmon_ont_03_expression/all.tran.counts.tsv",sample = samples),
+#        expand("results/08_quantify_new_ref_salmon_ont_03_expression/all.gene.counts.csv",sample = samples),
+#        expand("results/08_quantify_new_ref_salmon_ont_03_expression/tran_symbol_counts.csv",sample = samples),
+#        expand("results/08_liqa/{sample}/{sample}_liqa_count.txt",sample = samples),
+#        "results/08_liqa_merge/liqa_count.txt"
+#        expand(,sample = samples),
+#        expand("results/08_quantify_new_ref_stringtie/{sample}/stringtie_quant.gtf", sample = samples),
+#        expand("results/08_quantify_new_ref_stringtie/{sample}/tran_tpm.txt", sample = samples),
+#        "results/08_quantify_new_ref_stringtie_merge/stringtie_tran_tpm.csv"
+#s95_scte:
+#        expand("results/s95_scte/{library}_{barcode}/{library}_{barcode}_sorted.bam", library=libraries, barcode=barcodes),
+#        expand("results/s95_scte/{library}_{barcode}/{library}_{barcode}_sorted.bam.bai", library=libraries, barcode=barcodes),
+#        expand("results/s95_scte/{library}_{barcode}/DONE_01_genome_mapping", library=libraries, barcode=barcodes),
+#        expand("results/s95_scte/{library}_{barcode}/scte_{library}_{barcode}.csv", library=libraries, barcode=barcodes),
+#        expand("results/s95_scte/{library}_{barcode}/DONE_02_scte", library=libraries, barcode=barcodes)
+#s96_line1_mapping_and_quantify_01_cdna_mapping:
+#        expand("results/s96_LINE1_mapping_and_quantify/{library}_{barcode}/{library}_{barcode}_cdna.bam", library = libraries, barcode = barcodes),
+#        expand("results/s96_LINE1_mapping_and_quantify/{library}_{barcode}/salmon_quant/quant.sf", library = libraries, barcode = barcodes),
+#        expand("results/s96_LINE1_mapping_and_quantify/{library}_{barcode}/DONE_01_LINE1_mapping", library = libraries, barcode = barcodes),
+#s96_line1_mapping_and_quantify_02_saturation_curve:
+#        expand("results/s96_LINE1_mapping_and_quantify/{library}_{barcode}/DONE_02_saturation_curve", library = libraries, barcode = barcodes),
+#s96_line1_mapping_and_quantify_03_expression
+#        "results/s96_LINE1_mapping_and_quantify_03_expression/all.counts.tsv",
+#        "results/s96_LINE1_mapping_and_quantify_03_expression/Gene_counts.csv"
+#s97_isoform_chain
+#        "results/s97_isoform_chain_NT/chain_NT.config",
+#        "results/s97_isoform_chain_NT/all_samples.chained.gff",
+#        "results/s97_isoform_chain_PT/chain_PT.config",
+#        "results/s97_isoform_chain_PT/all_samples.chained.gff"
+##s98_sv
+#        expand("results/98_sv/{library}_{barcode}/{library}_{barcode}.bam",library=libraries,barcode=barcodes),
+#        expand("results/98_sv/{library}_{barcode}/DONE_01_cdna_mapping_for_sv",library=libraries,barcode=barcodes),
+##        expand("results/98_sv/{library}_{barcode}/cutesv/{library}_{barcode}.vcf",library=libraries,barcode=barcodes),
+##        expand("results/98_sv/{library}_{barcode}/DONE_02_cutesv",library=libraries,barcode=barcodes),
+#        expand("results/98_sv/{library}_{barcode}/sniffles/{library}_{barcode}.vcf",library=libraries,barcode=barcodes),
+#        expand("results/98_sv/{library}_{barcode}/DONE_03_sniffles",library=libraries,barcode=barcodes),
+#s99_summary_stat
+#        expand("results/s99_summary_stat/{library}_{barcode}/summary_stat.json", library=libraries, barcode=barcodes),
+#        expand("results/s99_summary_stat/{library}_{barcode}/DONE", library=libraries, barcode=barcodes),
+#        "results/s99_summary_stat_merge/summary_stat_merge.csv",
+#        "results/s99_summary_stat_merge/DONE_plot"
+#        expand("results/s97_isoform_stat/{library}_{barcode}/isoform_exons.txt", library = libraries, barcode = barcodes),
+#        expand("results/s97_isoform_stat/{library}_{barcode}/isoform_merge.txt", library = libraries, barcode = barcodes),
+#        expand("results/s97_isoform_stat/{library}_{barcode}/isoform_erase.txt", library = libraries, barcode = barcodes)
+#expand(, library = libraries, barcode = barcodes),
+    output:
+        "All_DONE"
+    threads: 1
+    shell:
+        "touch {output}"

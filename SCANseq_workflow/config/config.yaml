@@ -1,0 +1,30 @@
+dir_smk: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/project/ont_iso_crc/2_RNA_CRC/0_smk_scanseq"
+dir_rawdata: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/data_backups/ont_iso_crc/02_RNA_CRC/ONT_CRC"
+
+libraries: "config/library.yaml"
+samples: "config/sample_1395cells.yaml"
+barcodes: "config/barcode_96/barcode_96.csv"
+barcode_fa: "config/barcode_96/barcode_96.fa"
+
+#ref
+file_ref_dna_index: "resources/GRCh38_ensembl_108/fasta/Homo_sapiens.GRCh38.dna.primary_assembly.mmi"
+file_ref_dna_fa: "resources/GRCh38_ensembl_108/fasta/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
+file_ref_gtf: "resources/GRCh38_ensembl_108/gtf/Homo_sapiens.GRCh38.108.chr.gtf"
+file_ref_dna_minimap2_bed: "resources/GRCh38_ensembl_108/gtf/Homo_sapiens.GRCh38.108.chr.gtf.paftools.bed"
+
+cdna_cupcake: "PYTHONPATH=$PYTHONPATH:/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/cDNA_Cupcake/sequence:/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/cDNA_Cupcake"
+dir_sqanti3: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI3-5.1"
+exe_sqanti_qc3: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI3-4.2/sqanti3_qc.py"
+ref_TSS: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI3-4.2/data/ref_TSS_annotation/human.refTSS_v3.1.hg38.bed"
+polyAmotif: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI3-4.2/data/polyA_motifs/mouse_and_human.polyA_motif.txt"
+exe_sqanti3_RulesFilter: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI3-4.2/sqanti3_RulesFilter.py"
+exe_sqanti_filter2: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/SQANTI2/sqanti_filter2.py"
+exe_collapse_isoforms_by_sam: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/software/cDNA_Cupcake/build/scripts-3.7/collapse_isoforms_by_sam.py"
+exe_summary_stat: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/summary_stat.py"
+exe_summary_stat_salmon_ont: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/summary_stat_salmon_ont.py"
+exe_summary_stat_merge: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/summary_stat_merge.py"
+exe_get_isoform_exons: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/test_summary_isoform/s01_get_isoform_exons.py"
+exe_merge_isoform_info: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/test_summary_isoform/s02_merge_isoform_info.py"
+exe_erase_start_end: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/workflow/SCAN_seq/smk/scripts/test_summary_isoform/s03_erase_start_end.py"
+
+scte_idx: "/gpfs1/tangfuchou_pkuhpc/tangfuchou_cls/luping/project/ont_iso_crc/2_RNA_CRC/0_smk_scanseq/resources/scTE/corrected_new_ref.exclusive.idx"
